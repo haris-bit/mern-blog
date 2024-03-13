@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {Button, Label, Spinner, TextInput} from 'flowbite-react';
+import {Alert, Button, Label, Spinner, TextInput} from 'flowbite-react';
+import OAuth from '../components/OAuth';
 
 
 const SignUp = () => {
@@ -36,6 +37,7 @@ const SignUp = () => {
       const data = await res.json();
 
       if (data.success === false) {
+        setLoading(false);
         return setErrorMessage(data.message);
       }
 
@@ -65,9 +67,9 @@ const SignUp = () => {
                 className="font-bold dark:text-white text-4xl"
             >
                 <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
-                Cleverly's
+                Sign
                 </span>
-                Blog
+                Up
             </Link>
             <p className="text-sm mt-5">
             This is a demo project. You can sign up with your email and password
@@ -124,6 +126,7 @@ const SignUp = () => {
                   ) : ("Sign Up")
                   }
               </Button>
+              <OAuth />
             </form>
             <div className="flex gap-2 text-sm mt-5">
               <span>Already have an account?</span>
@@ -131,6 +134,12 @@ const SignUp = () => {
                 Sign In
               </Link>
             </div>
+
+            {errorMessage && (
+              <Alert className="mt-5" color="failure">
+                {errorMessage}
+              </Alert>
+            )}
 
           </div>
         </div>
